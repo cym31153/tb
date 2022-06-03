@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # 全局变量
-ver="2.1.9"
-changeLog="新增Misaka魔改版X-ui脚本"
+ver="2.8.8"
+changeLog="Powered By CORN"
 arch=$(uname -m)
 virt=$(systemd-detect-virt)
 kernelVer=$(uname -r)
@@ -26,10 +26,9 @@ yellow() {
 	echo -e "\033[33m\033[01m$1\033[0m"
 }
 
-# 必须以root运行脚本
-[[ $(id -u) != 0 ]] && red "请使用“sudo -i”登录root用户后执行工具箱脚本！！！" && exit 1
 
-# 判断系统，此部分代码感谢fscarmen的技术指导
+[[ $(id -u) != 0 ]] && red "root!" && exit 1
+
 for i in "${CMD[@]}"; do
 	SYS="$i" && [[ -n $SYS ]] && break
 done
@@ -38,7 +37,7 @@ for ((int = 0; int < ${#REGEX[@]}; int++)); do
 	[[ $(echo "$SYS" | tr '[:upper:]' '[:lower:]') =~ ${REGEX[int]} ]] && SYSTEM="${RELEASE[int]}" && [[ -n $SYSTEM ]] && break
 done
 
-[[ -z $SYSTEM ]] && red "不支持VPS的当前系统，请使用主流操作系统" && exit 1
+[[ -z $SYSTEM ]] && red "Unsupported System" && exit 1
 
 # 更新系统及安装依赖，此部分代码感谢fscarmen的技术指导
 ${PACKAGE_UPDATE[int]}
@@ -65,9 +64,9 @@ if [ -z $WAN6 ]; then
 fi
 
 # 获取脚本运行次数
-COUNT=$(curl -sm8 "https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2FMisaka-blog%2FMisakaLinuxToolbox%40master%2FMisakaToolbox.sh&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false" 2>&1) &&
-TODAY=$(expr "$COUNT" : '.*\s\([0-9]\{1,\}\)\s/.*')
-TOTAL=$(expr "$COUNT" : '.*/\s\([0-9]\{1,\}\)\s.*')
+COUNT="2.8.8" &&
+TODAY="2.8.8"
+TOTAL="2.8.8"
 
 #第一页
 oraclefirewall() {
@@ -85,7 +84,7 @@ oraclefirewall() {
 		iptables -P OUTPUT ACCEPT
 		iptables -F
 		apt-get purge netfilter-persistent -y
-		yellow "Oracle Cloud原生系统防火墙禁用成功"
+		yellow "Oracle Cloud原生火墙禁用成功"
 	fi
 }
 
@@ -102,7 +101,7 @@ open_ports() {
 	iptables -F
 	iptables -X
 	netfilter-persistent save
-	yellow "VPS中的所有网络端口已开启"
+	yellow "VPS中的所有启"
 }
 
 euservDig9() {
@@ -135,19 +134,19 @@ bbr() {
 		wget --no-cache -O lkl-haproxy.sh https://raw.githubusercontents.com/mzz2017/lkl-haproxy/master/lkl-haproxy.sh && bash lkl-haproxy.sh
 	fi
 	if [ ${virt} == "lxc" ]; then
-		red "抱歉，你的VPS暂时不支持bbr加速脚本"
+		red "抱歉，你的VPS暂持bbr加速脚本"
 	fi
 }
 
 warp() {
 	echo "                            "
-	green "请选择你接下来使用的脚本"
+	green "请选择你接"
 	echo "                            "
-	echo "1. Misaka-WARP"
-	echo "2. fscarmen"
-	echo "3. fscarmen-docker"
-	echo "4. fscarmen warp解锁奈飞流媒体脚本"
-	echo "5. P3TERX"
+	echo "1. MisakARP"
+	echo "2. fscaren"
+	echo "3. fscarmeocker"
+	echo "4. fscarmen warp解锁飞体脚本"
+	echo "5. P3TER"
 	echo "                            "
 	echo "0. 返回主菜单"
 	read -p "请输入选项:" warpNumberInput
@@ -171,7 +170,7 @@ acmesh() {
 
 dns64server() {
 	echo -e nameserver 2a01:4f8:c2c:123f::1 > /etc/resolv.conf
-	yellow "设置DNS64服务器完成"
+	yellow "设置DNS64器完成"
 }
 
 cfArgoTunnel() {
@@ -215,13 +214,13 @@ bt() {
 
 xui() {
 	echo "                            "
-	green "请选择你接下来使用的X-ui面板版本"
+	green "X-ui"
 	echo "                            "
-	echo "1. 使用X-ui官方原版"
-	echo "2. 使用Misaka魔改版"
+	echo "1. X-ui Pure"
+	echo "2. Forked"
 	echo "                            "
-	echo "0. 返回主菜单"
-	read -p "请输入选项:" xuiNumberInput
+	echo "0. Return"
+	read -p "Enter Here:" xuiNumberInput
 	case "$xuiNumberInput" in
 		1) bash <(curl -Ls https://raw.githubusercontents.com/vaxilu/x-ui/master/install.sh) ;;
 		2) wget -N --no-check-certificate https://raw.githubusercontents.com/Misaka-blog/x-ui/master/install.sh && bash install.sh ;;
@@ -342,20 +341,7 @@ ddsystem() {
 # 菜单
 menu() {
 	clear
-	red "=================================="
-	echo "                           "
-	red "       Misaka Linux Toolbox        "
-	red "          by 小御坂的破站           "
-	echo "                           "
-	red "  Site: https://owo.misaka.rest  "
-	echo "                           "
-	red "=================================="
-	echo "                            "
-	green "当前工具箱版本：v$ver"
-	green "更新日志：$changeLog"
-	green "今日运行次数：$TODAY 总共运行次数：$TOTAL"
-	echo "                            "
-	red "检测到VPS信息如下："
+	red "检测到息如下："
 	yellow "处理器架构：$arch"
 	yellow "虚拟化架构：$virt"
 	yellow "操作系统：$CMD"
@@ -365,15 +351,15 @@ menu() {
 	echo "                            "
 	green "下面是脚本分类，请选择对应的分类后进入到相对应的菜单中"
 	echo "                            "
-	echo "1. 系统相关"
-	echo "2. 面板相关"
-	echo "3. 节点相关"
-	echo "4. VPS测试"
-	echo "5. VPS探针"
-	[ ${virt} == "kvm" ] && echo "6. 更换VPS系统(DD系统)"
+	echo "1. 系统关"
+	echo "2. 面板关"
+	echo "3. 节点关"
+	echo "4. VPS测"
+	echo "5. VPS针"
+	[ ${virt} == "kvm" ] && echo "6. 更换VPS(DD系统)"
 	echo "                            "
-	echo "9. 更新工具箱"
-	echo "0. 退出工具箱"
+	echo "9. 更新工箱"
+	echo "0. 退出工箱"
 	echo "                            "
 	read -p "请输入选项:" menuNumberInput
 	case "$menuNumberInput" in
@@ -390,26 +376,26 @@ menu() {
 
 page1() {
 	echo "                            "
-	green "请选择你接下来的操作"
+	green "请选择你下来的操作"
 	echo "                            "
-	echo "1. Oracle Cloud原生系统关闭防火墙"
-	echo "2. 开启VPS中所有的网络端口"
-	echo "3. 德鸡DiG9正常访问网络解决方案"
-	echo "4. 修改登录方式为 root + 密码 登录"
-	echo "5. Screen 后台任务管理"
-	echo "6. 开启BBR加速"
-	echo "7. 设置DNS64服务器"
-	echo "8. 安装WARP"
-	echo "9. 安装docker"
-	echo "10. Acme.sh 证书申请脚本"
-	echo "11. CloudFlare Argo Tunnel一键脚本"
-	echo "12. Ngrok 内网穿透一键脚本"
-	echo "13. LXC/OVZ VPS打开TUN模块"
-	echo "14. 更换Linux软件源"
-	echo "15. 更换系统语言为中文"
+	echo "1. Oracle Clo原生系统关闭防火墙"
+	echo "2. 开启VPS中有的网络端口"
+	echo "3. 德鸡DiG9正访问网络解决方案"
+	echo "4. 修改登录为 root + 密码 登录"
+	echo "5. Screen 台任务管理"
+	echo "6. 开启BB加速"
+	echo "7. 设置DNS6务器"
+	echo "8. 安装WAP"
+	echo "9. 安装dockr"
+	echo "10. Acmesh 书申请脚本"
+	echo "11. CloudFlare Ar Tunnel一键脚本"
+	echo "12. Ngrok 内网一键脚本"
+	echo "13. LXC/OVZ VP开TUN模块"
+	echo "14. 更换Linu件源"
+	echo "15. 更换系言为中文"
 	echo "                            "
-	echo "0. 返回主菜单"
-	read -p "请输入选项:" page1NumberInput
+	echo "0. 返回主单"
+	read -p "请输入选:" page1NumberInput
 	case "$page1NumberInput" in
 		1) oraclefirewall ;;
 		2) open_ports ;;
@@ -432,17 +418,17 @@ page1() {
 
 page2() {
 	echo "                            "
-	green "请选择你准备安装的面板"
+	green "请选择你准安装的面板"
 	echo "                            "
-	echo "1. 安装aapanel面板"
-	echo "2. 安装x-ui面板"
-	echo "3. 安装aria2(面板为远程链接)"
-	echo "4. 安装CyberPanel面板"
-	echo "5. 安装青龙面板"
-	echo "6. 安装Trojan面板"
-	echo "7. 安装V2ray.Fun面板"
-	echo "                            "
-	echo "0. 返回主菜单"
+	echo "1. 安装aapane面板"
+	echo "2. 安x-ui板"
+	echo "3. 安装aria2面板为远程链接)"
+	echo "4. 安装Cyberanel板"
+	echo "5. 安装青龙面"
+	echo "6. 安装Trojan板"
+	echo "7. 安装V2ray.Fu面板"
+	echo "                           "
+	echo "0. 返回主单"
 	read -p "请输入选项:" page2NumberInput
 	case "$page2NumberInput" in
 		1) bt ;;
@@ -458,16 +444,16 @@ page2() {
 
 page3() {
 	echo "                            "
-	green "请选择你接下来使用的脚本"
+	green "请选择你接下使用的脚本"
 	echo "                            "
-	echo "1. 使用Mack-a的脚本"
-	echo "2. 使用233boy的脚本"
-	echo "3. 使用Misaka Xray的脚本"
-	echo "4. 搭建Telegram MTProxy代理"
-	echo "5. 使用Teddysun脚本搭建ShadowSocks"
+	echo "1. 使用Mack-a脚本"
+	echo "2. 使用233boy的本"
+	echo "3. 使用Misakaray的脚本"
+	echo "4. 搭建Telegram MTroxy代理"
+	echo "5. 使用Teddysun脚搭建ShadowSocks"
 	echo "                            "
-	echo "0. 返回主菜单"
-	read -p "请输入选项:" page3NumberInput
+	echo "0. 返回主单"
+	read -p "请输入项:" page3NumberInput
 	case "$page3NumberInput" in
 		1) macka ;;
 		2) boy233 ;;
@@ -480,15 +466,15 @@ page3() {
 
 page4() {
 	echo "                            "
-	green "请选择你接下来的操作"
+	green "请选择接下来的操作"
 	echo "                            "
-	echo "1. VPS测试"
-	echo "2. 流媒体检测"
-	echo "3. VPS三网测速"
-	echo "4. 路由测试"
+	echo "1. VP测试"
+	echo "2. 流媒检测"
+	echo "3. VPS三测速"
+	echo "4. 路由测"
 	echo "                            "
-	echo "0. 返回主菜单"
-	read -p "请输入选项:" page4NumberInput
+	echo "0. 返回主单"
+	read -p "请输入项:" page4NumberInput
 	case "$page4NumberInput" in
 		1) vpsBench ;;
 		2) mediaUnblockTest ;;
@@ -500,13 +486,13 @@ page4() {
 
 page5() {
 	echo "                            "
-	green "请选择你需要的探针"
+	green "请选择你需的探针"
 	echo "                            "
-	echo "1. 哪吒面板"
-	echo "2. 可乐ServerStatus-Horatu"
+	echo "1. 哪面板"
+	echo "2. 可乐erverStatus-Horatu"
 	echo "                            "
-	echo "0. 返回主菜单"
-	read -p "请输入选项:" page5NumberInput
+	echo "0. 返回主单"
+	read -p "请输入项:" page5NumberInput
 	case "$page5NumberInput" in
 		1) nezha ;;
 		2) serverstatus ;;
